@@ -3392,32 +3392,32 @@
         if (!s) { document.getElementById('fs').classList.add('error'); ok = false; }
         if (!m) { document.getElementById('fm').classList.add('error'); ok = false; }
         if (!ok) return;
-        
+
         const origText = btn.textContent;
         btn.textContent = 'SENDING...';
         btn.style.pointerEvents = 'none';
 
         try {
-            const res = await fetch('http://localhost:3000/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: n, email: e, subject: s, message: m })
-            });
-            const data = await res.json();
-            
-            if (res.ok) {
-                document.getElementById('formEl').style.display = 'none';
-                document.getElementById('formSucc').style.display = 'block';
-                launchConfetti();
-            } else {
-                alert('Error: ' + (data.error || 'Failed to send message.'));
-            }
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: n, email: e, subject: s, message: m })
+          });
+          const data = await res.json();
+
+          if (res.ok) {
+            document.getElementById('formEl').style.display = 'none';
+            document.getElementById('formSucc').style.display = 'block';
+            launchConfetti();
+          } else {
+            alert('Error: ' + (data.error || 'Failed to send message.'));
+          }
         } catch (err) {
-            console.error(err);
-            alert('Error connecting to the server. Make sure the backend is running.');
+          console.error(err);
+          alert('Error connecting to the server. Make sure the backend is running.');
         } finally {
-            btn.textContent = origText;
-            btn.style.pointerEvents = 'auto';
+          btn.textContent = origText;
+          btn.style.pointerEvents = 'auto';
         }
       });
     }
